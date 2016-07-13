@@ -1,0 +1,69 @@
+<div class="row">
+<nav>
+  <div class="nav-wrapper">
+    <form [ngFormModel]="form">
+      <div class="input-field">
+        <input id="search" type="search" ngControl="search" placeholder="Search github user..." required>
+        <label for="search"><i class="material-icons">search</i></label>
+        <i class="material-icons">close</i>
+      </div>
+    </form>
+  </div>
+</nav>
+</div>
+<div class="section" *ngIf="isLoading">
+  <div class="progress">
+    <div class="indeterminate"></div>
+  </div>
+</div>
+<div class="section" *ngIf="notFound">
+  <h5>Sorry, No results for "{{username}}"</h5>
+</div>
+<div class="row" *ngIf="user.login && !notFound">
+  <div class="col s5">
+    <div class="card">
+      <div class="card-image waves-effect waves-block waves-light">
+        <img class="activator" src="{{ user.avatar_url }}">
+      </div>
+      <div class="card-content">
+        <span class="card-title activator grey-text text-darken-4">{{user.name}}<i class="material-icons right">more_vert</i></span>
+        <p><a href="{{user.blog}}" target="_blank" *ngIf="user.blog">Blog</a></p>
+      </div>
+      <div class="card-reveal">
+        <span class="card-title grey-text text-darken-4">@{{user.login}}<i class="material-icons right">close</i></span>
+        <p>Company : {{user.company}}</p>
+        <p>Subscriptions : {{user.subscriptions_url}}</p>
+        <p>Organizations : {{user.oorganizations_url}} </p>
+        <p>Repos : {{user.repos_url}} </p>
+        <p>Location : {{user.location}}</p>
+        <p>Email : {{user.email}}</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="divide">
+</div>
+
+<div class="row" *ngIf="user.login && !notFound">
+  <h6> Followers </h6>
+  <div class="col s7 m7 offset-m2 l6 offset-l1">
+    <div class="section" *ngIf="followers.length == 0">
+      <p class="flow-text">No followers found</p>
+    </div>
+  </div>
+  <div class="col s7 m7 offset-m2 l6 offset-l1">
+    <div class="card-panel grey lighten-5 z-depth-1" *ngFor="#follower of followers">
+      <div class="row valign-wrapper">
+        <div class="col s5">
+          <img src="{{ follower.avatar_url }}" alt="" class="circle responsive-img">
+          <!-- notice the "circle" class -->
+        </div>
+        <div class="col s7">
+          <span class="black-text">
+                <a href="{{follower.html_url}}" target="_blank">@{{ follower.login}}</a>
+              </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
